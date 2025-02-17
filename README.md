@@ -1,1 +1,3 @@
-# simple gl framework im working on
+# Simple OpenGL framework
+
+super bad honestly
