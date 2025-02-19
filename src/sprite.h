@@ -12,7 +12,8 @@ typedef struct Sprite {
 	unsigned int EBO;
 	unsigned int shaderProgram;
 
-	vec3 location;
+	vec2 location;
+	vec2 size;
 	vec3 scale;
 
 } Sprite;

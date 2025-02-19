@@ -5,6 +5,9 @@
 #include <cglm/util.h>
 #include "sprite.h"
 
+#define WINHEIGHT 960
+#define WINWIDTH 1280
+
 int vertexDataAmount = 24;
 
 void InitSprite(Sprite *sprite, unsigned int *shaderProgram, float vertexData[24], unsigned int indiceData[6]) {
@@ -60,9 +63,11 @@ void InitSprite(Sprite *sprite, unsigned int *shaderProgram, float vertexData[24
 void MoveSprite(Sprite *sprite, float x, float y) {
 	sprite->location[0] = x;
 	sprite->location[1] = y;
+
 	mat4 tranform;
+	vec3 transformVec = {x / WINWIDTH, y / WINHEIGHT, 0};
 	glm_mat4_identity(tranform);	
-	glm_translate(tranform, sprite->location);
+	glm_translate(tranform, transformVec);
 
 	unsigned int transformLoc = glGetUniformLocation(sprite->shaderProgram, "transform");
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, tranform[0]);

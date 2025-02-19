@@ -1,3 +1,4 @@
+#include <cglm/cam.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -99,7 +100,7 @@ int main() {
 
 		mat4 projection;
 		glm_mat4_identity(projection);
-		glm_perspective(glm_rad(45.0f), (float)WINWIDTH/(float)WINHEIGHT, 0.1f, 100.0f, projection);
+		glm_ortho_default(WINWIDTH / WINHEIGHT, projection);
 
 		mat4 model;
 		glm_mat4_identity(model);
@@ -120,8 +121,8 @@ int main() {
 		unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 	 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection[0]);
 
-		MoveSprite(&test, -0.5, -0.5);
-		ScaleSprite(&test, 1, 1);
+		MoveSprite(&test, 0, 0);
+		ScaleSprite(&test, 0.2, 0.2);
 		DrawSprite(&test);
 
 
