@@ -1,4 +1,4 @@
-#include "gladsrc/include/glad/glad.h"
+#include "../gladsrc/include/glad/glad.h"
 #include <cglm/affine.h>
 #include <cglm/cglm.h>
 #include <cglm/mat4.h>

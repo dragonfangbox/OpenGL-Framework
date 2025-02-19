@@ -1,5 +1,5 @@
 #pragma once
-#include "./gladsrc/include/glad/glad.h"
+#include "../gladsrc/include/glad/glad.h"
 
 const char* ReadShader(char fileName[]);
 void CreateShader(unsigned int *shader, const char* shaderSource, GLenum shaderType);

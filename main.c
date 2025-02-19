@@ -4,15 +4,15 @@
 #include <cglm/cglm.h>
 #include "gladsrc/include/glad/glad.h"
 
-#include "shaders.h"
-#include "sprite.h"
+#include "./src/shaders.h"
+#include "./src/sprite.h"
 
 #define WINHEIGHT 960.0
 #define WINWIDTH 1280.0
 
 int main() {
-	const char* fragmentShaderSource = ReadShader("FragShader.frag");
-	const char* vertexShaderSource = ReadShader("VertShader.vert");
+	const char* fragmentShaderSource = ReadShader("./src/shaders/FragShader.frag");
+	const char* vertexShaderSource = ReadShader("./src/shaders/VertShader.vert");
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("sdl no init ruh roh");

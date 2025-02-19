@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "gladsrc/include/glad/glad.h"
+#include "../gladsrc/include/glad/glad.h"
 #include "shaders.h"
 
 

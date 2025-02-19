@@ -1,7 +1,7 @@
 #pragma once
 #include <cglm/cglm.h>
 #include <cglm/types.h>
-#include "gladsrc/include/glad/glad.h"
+#include "../gladsrc/include/glad/glad.h"
 
 typedef struct Sprite {
 	float vertexData[24];
