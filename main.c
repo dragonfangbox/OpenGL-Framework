@@ -1,3 +1,4 @@
+#include <SDL2/SDL_events.h>
 #include <cglm/cam.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -93,6 +94,15 @@ int main() {
 		while(SDL_PollEvent(&event)) {
 			if(event.type == SDL_QUIT) {
 				running = 0;
+			} else if(event.type == SDL_KEYDOWN) {
+				printf("keydown\n");
+				switch(event.key.keysym.scancode) {
+				case SDL_SCANCODE_D:
+					test.location[0] += 10;
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		glClearColor(0.3f, 0.2f, 0.5f, 1.0f);
@@ -121,10 +131,10 @@ int main() {
 		unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 	 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection[0]);
 
-		MoveSprite(&test, 0, 0);
+		SetSpriteLocation(&test, 1000, 1000);
+		MoveSprite(&test, 500, 0);
 		ScaleSprite(&test, 0.2, 0.2);
 		DrawSprite(&test);
-
 
 		SDL_GL_SwapWindow(window);
 	}

@@ -60,26 +60,31 @@ void InitSprite(Sprite *sprite, unsigned int *shaderProgram, float vertexData[24
 	glEnableVertexAttribArray(0);
 }
 
-void MoveSprite(Sprite *sprite, float x, float y) {
-	mat4 tranform;
 
-	if(x == 0 && y == 0) {
-		vec3 transformVec = {sprite->location[0] / WINWIDTH, sprite->location[1] / WINHEIGHT, 0};
-		glm_mat4_identity(tranform);	
-		glm_translate(tranform, transformVec);
+void SetSpriteLocation(Sprite* sprite, float x, float y) {
+	sprite->location[0] = x;
+	sprite->location[1] = y;
 
-	} else {
-		sprite->location[0] = x;
-		sprite->location[1] = y;
-
-		vec3 transformVec = {x / WINWIDTH, y / WINHEIGHT, 0};
-		glm_mat4_identity(tranform);	
-		glm_translate(tranform, transformVec);
-
-	}
+	mat4 transform;
+	vec3 transformVec = {x / WINWIDTH, y / WINHEIGHT, 0};
+	glm_mat4_identity(transform);	
+	glm_translate(transform, transformVec);
 
 	unsigned int transformLoc = glGetUniformLocation(sprite->shaderProgram, "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, tranform[0]);
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform[0]);
+}
+
+void MoveSprite(Sprite *sprite, float x, float y) {
+	sprite->location[0] += x;
+	sprite->location[1] += y;
+
+	mat4 transform;
+	vec3 transformVec = {sprite->location[0] / WINWIDTH, sprite->location[1] / WINHEIGHT, 0};
+	glm_mat4_identity(transform);	
+	glm_translate(transform, transformVec);
+
+	unsigned int transformLoc = glGetUniformLocation(sprite->shaderProgram, "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, transform[0]);
 }
 
 void ScaleSprite(Sprite *sprite, float x, float y) {

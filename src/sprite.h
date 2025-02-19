@@ -22,6 +22,7 @@ void InitSprite(Sprite *sprite, unsigned int *shaderProgram, float vertexData[24
 
 void DrawSprite(Sprite *sprite);
 
+void SetSpriteLocation(Sprite* sprite, float x, float y);
 void MoveSprite(Sprite *sprite, float x, float y);
 void ScaleSprite(Sprite *sprite, float x, float y);
 
