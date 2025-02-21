@@ -1,4 +1,5 @@
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_scancode.h>
 #include <cglm/cam.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -36,9 +37,10 @@ int main() {
 	    return -1;
 	}
 
+	glEnable(GL_ALPHA);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	unsigned int vertShader;
 	CreateShader(&vertShader, vertexShaderSource, GL_VERTEX_SHADER);
@@ -73,11 +75,11 @@ int main() {
 
 	glViewport(0, 0, WINWIDTH, WINHEIGHT);
 
-	float vertexData[24] = {
-	 1.0,  1.0,  0.0, 1.0, 0.0, 0.0,
-	  1.0, -1.0,0.0, 0.0, 1.0, 0.0,
-	-1.0, 1.0,  0.0, 0.0, 0.0, 1.0,
-	-1.0, -1.0, 0.0, 1.0, 1.0, 1.0
+	float vertexData[28] = {
+	 1.0,  1.0,   1.0, 1.0, 1.0, 1.0, 1.0,
+	  1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 0.0,
+	-1.0, 1.0,   1.0, 1.0, 1.0, 0.0, 1.0,
+	-1.0, -1.0,  1.0, 1.0, 1.0, 0.0, 0.0
 	};
 
 	unsigned int indiceData[6] = {
@@ -95,25 +97,29 @@ int main() {
 			if(event.type == SDL_QUIT) {
 				running = 0;
 			} else if(event.type == SDL_KEYDOWN) {
-				printf("keydown\n");
 				switch(event.key.keysym.scancode) {
 				case SDL_SCANCODE_D:
-					test.location[0] += 10;
+					test.location[0] += 20;
+					break;
+				case SDL_SCANCODE_A:
+					test.location[0] += -20;	
+					break;
+				case SDL_SCANCODE_R:
+					SetSpriteLocation(&test, 0, 0);
 					break;
 				default:
 					break;
 				}
 			}
 		}
+		
+		// RENDER LOOP
 		glClearColor(0.3f, 0.2f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		mat4 projection;
 		glm_mat4_identity(projection);
 		glm_ortho_default(WINWIDTH / WINHEIGHT, projection);
-
-		mat4 model;
-		glm_mat4_identity(model);
 
 		mat4 view;
 		vec3 cameraPos = {0.0, 0.0, -4.0};
@@ -122,18 +128,15 @@ int main() {
 
 		glUseProgram(shaderProgram);
 		 
-		unsigned int modelLoc = glGetUniformLocation(shaderProgram, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model[0]);
-
 		unsigned int viewLoc = glGetUniformLocation(shaderProgram, "view");
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view[0]);
 
 		unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 	 	glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection[0]);
 
-		SetSpriteLocation(&test, 1000, 1000);
-		MoveSprite(&test, 500, 0);
+		MoveSprite(&test, test.location[0], test.location[1]);
 		ScaleSprite(&test, 0.2, 0.2);
+		SetSpriteTexture(&test, "./assets/awesomeface.png.png");
 		DrawSprite(&test);
 
 		SDL_GL_SwapWindow(window);

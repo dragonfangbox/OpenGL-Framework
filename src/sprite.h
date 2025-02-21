@@ -4,21 +4,27 @@
 #include "../gladsrc/include/glad/glad.h"
 
 typedef struct Sprite {
-	float vertexData[24];
+	float vertexData[28];
 	unsigned int indiceData[6];
+	
 
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;
+	unsigned int Texture;
 	unsigned int shaderProgram;
 
-	vec2 location;
-	vec2 size;
+	vec3 location;
 	vec3 scale;
+
+	mat4 model;
+
+	float rotation;
 
 } Sprite;
 
 void InitSprite(Sprite *sprite, unsigned int *shaderProgram, float vertexData[24], unsigned int indiceData[6]);
+void SetSpriteTexture(Sprite* sprite, const char* filename);
 
 void DrawSprite(Sprite *sprite);
 
